@@ -105,4 +105,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void logout(){
+        ParseUser.logOut();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+    }
 }
