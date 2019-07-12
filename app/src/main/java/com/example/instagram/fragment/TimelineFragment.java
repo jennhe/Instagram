@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +28,10 @@ public class TimelineFragment extends Fragment {
     public static final String TAG = "TimelineFragment";
     protected PostAdapter adapter;
     protected List<Post> mPosts;
+    private SwipeRefreshLayout swipeContainer;
+    private int limit;
+    // Store a member variable for the listener
+    private com.codepath.instagram.EndlessRecyclerViewScrollListener scrollListener;
 
     @Nullable
     @Override
@@ -47,6 +52,38 @@ public class TimelineFragment extends Fragment {
         //set the layout manager on the recycler view
         rvTimeline.setLayoutManager(new LinearLayoutManager(getContext()));
         queryPosts();
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                mPosts.clear();
+                adapter.clear();
+                queryPosts();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        // Retain an instance so that you can call `resetState()` for fresh searches
+        scrollListener = new com.codepath.instagram.EndlessRecyclerViewScrollListener(new LinearLayoutManager(getContext())) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                limit += 10;
+                queryPosts();
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        rvTimeline.addOnScrollListener(scrollListener);
     }
 
     protected void queryPosts() {
@@ -72,4 +109,7 @@ public class TimelineFragment extends Fragment {
         });
 
     }
+
+
+
 }
