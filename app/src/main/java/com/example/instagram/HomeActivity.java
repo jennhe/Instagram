@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.instagram.fragment.ComposeFragment;
 import com.example.instagram.fragment.ProfileFragment;
@@ -36,19 +35,19 @@ public class HomeActivity extends AppCompatActivity {
                  switch(menuItem.getItemId()){
                      case R.id.action_home:
                          fragment = new TimelineFragment();
-                         Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_LONG).show();
+//                         Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_LONG).show();
                          break;
                      case R.id.action_compose:
-                         fragment = new ComposeFragment()
-                         Toast.makeText(HomeActivity.this, "Compose", Toast.LENGTH_LONG).show();
+                         fragment = new ComposeFragment();
+//                         Toast.makeText(HomeActivity.this, "Compose", Toast.LENGTH_LONG).show();
                          break;
                      case R.id.action_profile:
                          fragment = new ProfileFragment();
-                         Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_LONG).show();
+//                         Toast.makeText(HomeActivity.this, "Profile", Toast.LENGTH_LONG).show();
                          break;
                      default:
                          fragment = new TimelineFragment();
-                         Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_LONG).show();
+//                         Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_LONG).show();
                          break;
                  }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

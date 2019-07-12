@@ -28,7 +28,6 @@ import com.example.instagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -127,26 +126,6 @@ public class ComposeFragment extends Fragment {
                 }
             }
         });
-    }
-
-    private void queryPosts() {
-        ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
-        postQuery.include(Post.KEY_USER);
-        postQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "error with query");
-                    e.printStackTrace();
-                    return;
-                }
-                for(int i = 0; i < posts.size(); i++){
-                    Post post = posts.get(i);
-                    Log.d(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
-                }
-            }
-        });
-
     }
 
     private void launchCamera(){
