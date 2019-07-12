@@ -25,8 +25,8 @@ public class TimelineFragment extends Fragment {
 
     private RecyclerView rvTimeline;
     public static final String TAG = "TimelineFragment";
-    private PostAdapter adapter;
-    private List<Post> mPosts;
+    protected PostAdapter adapter;
+    protected List<Post> mPosts;
 
     @Nullable
     @Override
@@ -49,7 +49,7 @@ public class TimelineFragment extends Fragment {
         queryPosts();
     }
 
-    private void queryPosts() {
+    protected void queryPosts() {
         ParseQuery<Post> postQuery = new ParseQuery<Post>(Post.class);
         postQuery.include(Post.KEY_USER);
         postQuery.setLimit(20);
